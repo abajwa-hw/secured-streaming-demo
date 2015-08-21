@@ -1,0 +1,1 @@
+kafka-topics.sh --create --zookeeper great-wall01.cloud.hortonworks.com:2181 --replication-factor 1 --partitions 5 --topic pos

@@ -1,0 +1,203 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.hwx.online</groupId>
+	<artifactId>sme.security.demo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>sme.security.demo</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<kafka.version>0.8.2.2.3.0.0-2557</kafka.version> 
+		<junit.version>4.5</junit.version>
+		<log4j.version>1.2.17</log4j.version>
+		<hbase.version>1.1.1.2.3.0.0-2557</hbase.version>
+		<storm.version>0.10.0.2.3.0.0-2557</storm.version>
+		<storm.kafka.version>0.10.0.2.3.0.0-2557</storm.kafka.version>
+		<phoenix.version>4.4.0.2.3.0.0-2557</phoenix.version>
+		
+		
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>github-releases</id>
+			<url>http://oss.sonatype.org/content/repositories/github-releases/</url>
+		</repository>
+		<repository>
+			<id>clojars.org</id>
+			<url>http://clojars.org/repo</url>
+		</repository>
+		<repository>
+			<id>hortonworks</id>
+			<url>http://nexus-private.hortonworks.com/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>2.10.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka_2.10</artifactId>
+			<version>${kafka.version}</version>
+                <exclusions>
+
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>log4j-over-slf4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                </exclusions>
+		</dependency>	
+		
+		<!-- Storm Dependencies -->
+		<dependency>
+			<groupId>org.apache.storm</groupId>
+			<artifactId>storm-core</artifactId>
+			<version>${storm.version}</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>log4j-over-slf4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<!-- Storm Kafka Dependencies -->		
+    <dependency>
+    	<groupId>org.apache.storm</groupId>
+        <artifactId>storm-kafka</artifactId>
+        <version>${storm.kafka.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>log4j-over-slf4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>        
+    </dependency>
+
+		<dependency>
+			<groupId>org.apache.phoenix</groupId>
+			<artifactId>phoenix-core</artifactId>
+			<version>${phoenix.version}</version>
+			<exclusions>
+                                <exclusion>
+                                        <groupId>org.slf4j</groupId>
+                                        <artifactId>log4j-over-slf4j</artifactId>
+                                </exclusion>
+                                <exclusion>
+                                        <groupId>org.slf4j</groupId>
+                                        <artifactId>slf4j-log4j12</artifactId>
+                                </exclusion>
+                        </exclusions>
+		</dependency>
+		
+		<!-- HBase Dependcies -->
+		<dependency>
+			<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase-client</artifactId>
+			<version>${hbase.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>log4j-over-slf4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+                <dependency>
+                        <groupId>org.apache.hbase</groupId>
+                        <artifactId>hbase-protocol</artifactId>
+                        <version>${hbase.version}</version>
+                        <exclusions>
+                                <exclusion>
+                                        <groupId>org.slf4j</groupId>
+                                        <artifactId>log4j-over-slf4j</artifactId>
+                                </exclusion>
+                                <exclusion>
+                                        <groupId>org.slf4j</groupId>
+                                        <artifactId>slf4j-log4j12</artifactId>
+                                </exclusion>
+                        </exclusions>
+                </dependency>
+		
+	</dependencies>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>1.4</version>
+				 <configuration>
+					<createDependencyReducedPom>true</createDependencyReducedPom>
+					<filters>
+						<filter>
+							<artifact>*:*</artifact>
+							<!-- <excludes>
+								<exclude>META-INF/*.SF</exclude>
+								<exclude>META-INF/*.DSA</exclude>
+								<exclude>META-INF/*.RSA</exclude>
+							</excludes> -->
+						</filter>
+					</filters>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass></mainClass>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
